@@ -15,9 +15,9 @@ mongoose.connect(process.env.MONGO_URI, {
 
 const urlSchema = new mongoose.Schema({
   url: String,
-})
+});
 
-let URL = mongoose.model("URL",urlSchema)
+let URL = mongoose.model("URL",urlSchema);
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
@@ -37,35 +37,6 @@ app.get('/api/hello', function(req, res) {
 });
 
 
-// app.route('/api/shorturl/:shorturl?')
-// .get(function(req, res){
-//   console.log("GET REQUEST");
-//   // window.location.replace(res.);
-// })
-// .post(function(req, res){
-//   console.log("POST REQUEST");
-//   console.log("reqreqreq");
-//   console.log(req);
-//   dns.lookup(req.body.url, (err, address, family) => {
-//     if (err) {
-//         console.error('Error:', err.message);
-//         res.json({
-//           error: err
-//         });
-//         return;
-//     }
-    
-//     console.log(`Address: ${address}`);
-//     console.log(`Family: IPv${family}`);
-
-//     res.json({
-//       original_url: '',
-//       short_url: ''
-//     });
-//   });
-  
-// })
-
 app.get('/api/shorturl/:redirect_url',async function(req, res){
   console.log("SHORT URL ", req.params.redirect_url);
   const query = URL.findById(req.params.redirect_url);
@@ -76,7 +47,7 @@ app.get('/api/shorturl/:redirect_url',async function(req, res){
     res.redirect(result.url);
     return;
   }
-})
+});
 
 
 app.post('/api/shorturl',async function(req, res){
@@ -91,8 +62,6 @@ app.post('/api/shorturl',async function(req, res){
   }
   try {
 
-    
-    // const hostname = new URL(url).hostname;
     const query = URL.find({url: url});
     query.select('_id url short');
 
@@ -117,7 +86,7 @@ app.post('/api/shorturl',async function(req, res){
   } catch (error) {
     console.error('Error while querying:', error);
   }
-})
+});
 
 
 async function saveNewUrl(url){
